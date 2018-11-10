@@ -2,24 +2,36 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 
-import Navbar from './Navbar';
-import Game from './Game';
-import countries from './countryList';
+import Navbar from './components/Navbar';
+import Flag from './components/Flag';
+
+import getRandomCountry from './helper/getRandomCountry';
+import shuffleArray from './helper/shuffleArray';
+
+let countryName;
+let choices = [];
+let quizChoices = [];
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       flag: null,
-      textInput: '',
       answer: null,
-      country: ''
+      country: '',
+      isCorrect: ''
     }
   }
 
+  componentDidMount() {
+    this.startNewGame();
+    choices = [getRandomCountry(),getRandomCountry(),getRandomCountry()];
+    quizChoices = shuffleArray([countryName, ...choices]);
+  }
+
   startNewGame = () => {
-    console.log("starting new game");
-    let countryName = this.getRandomCountry();
+    // this.setState({isCorrect: null});
+    countryName = getRandomCountry();
     axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
       .then(res => {
         this.setState({
@@ -28,38 +40,43 @@ class App extends Component {
           country: countryName,
         })
       })
+      choices = [getRandomCountry(),getRandomCountry(),getRandomCountry()];
+    quizChoices = shuffleArray([countryName, ...choices]);
+    this.setState({isCorrect: ''});
   }
 
-  handleChange = (e) => {
+  handleRadioChange = (event) => {
     this.setState({
-      textInput: e.target.value
-    })
+      answer: event.target.value
+    });
   }
 
-  handleClick = (e) => {
-    e.preventDefault();
-    console.log(this.state.textInput);
-    console.log(this.state.country);
-    if(this.state.country.toLowerCase() === this.state.textInput.toLowerCase()) {
-      console.log("correct!");
-      alert("correct!");
-      this.startNewGame();
+  handleRadioSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.answer.toLowerCase() === countryName.toLowerCase()) {
+      console.log('correct!');
+      this.setState({isCorrect: 'Correct!'});
     } else {
-      console.log("incorrect!");
-      alert(`wrong! it is ${this.state.country}'s flag`);
-      this.startNewGame();
+      console.log('incorrect!');
+      this.setState({isCorrect: 'Wrong!'});
     }
   }
 
-  getRandomCountry = () => {
-    return countries[Math.floor(Math.random() * countries.length)];
-  }
 
   render() {
     return (
       <div className="App">
         <Navbar startNewGame={this.startNewGame} />
-        <Game startNewGame={this.startNewGame} flag={this.state.flag} textInput={this.state.textInput} handleChange={this.handleChange} handleClick={this.handleClick} />
+        <Flag startNewGame={this.startNewGame} flag={this.state.flag}/>
+        <form onSubmit={this.handleRadioSubmit}>
+          <div onChange={this.handleRadioChange}>
+          {quizChoices.map((ans, i) =>
+              {return (<span><input value={ans} type="radio" name="country" key={i} /> {ans} </span>)}
+            )}
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+        {this.state.isCorrect === 'Correct!' ? <h1 style={{color:'green'}}>{this.state.isCorrect}</h1> : <h1 style={{color:'red'}}>{this.state.isCorrect}</h1>}
       </div>
     );
   }
