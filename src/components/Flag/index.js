@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Flag.css';
 
-const Flag = ({ flag }) => {
+const Flag = ({ flagUrl }) => {
   return (
-    <img src={flag} alt="country flag" width="400px" className="flag"/>
+    <img src={flagUrl} alt="country flag" width="400px" className="flag"/>
   )
 }
 

@@ -9,7 +9,6 @@ import getRandomCountry from './helper/getRandomCountry';
 import shuffleArray from './helper/shuffleArray';
 
 let countryName;
-let choices = [];
 let quizChoices = [];
 
 class App extends Component {
@@ -25,12 +24,9 @@ class App extends Component {
 
   componentDidMount() {
     this.startNewGame();
-    choices = [getRandomCountry(),getRandomCountry(),getRandomCountry()];
-    quizChoices = shuffleArray([countryName, ...choices]);
   }
 
   startNewGame = () => {
-    // this.setState({isCorrect: null});
     countryName = getRandomCountry();
     axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
       .then(res => {
@@ -39,9 +35,8 @@ class App extends Component {
           textInput: '',
           country: countryName,
         })
-      })
-      choices = [getRandomCountry(),getRandomCountry(),getRandomCountry()];
-    quizChoices = shuffleArray([countryName, ...choices]);
+      });
+    quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({isCorrect: ''});
   }
 
@@ -62,21 +57,27 @@ class App extends Component {
     }
   }
 
+  handleNextButtonClick = () => {
+    this.startNewGame();
+  }
+
 
   render() {
     return (
       <div className="App">
         <Navbar startNewGame={this.startNewGame} />
-        <Flag startNewGame={this.startNewGame} flag={this.state.flag}/>
+        <Flag startNewGame={this.startNewGame} flagUrl={this.state.flag}/>
         <form onSubmit={this.handleRadioSubmit}>
           <div onChange={this.handleRadioChange}>
           {quizChoices.map((ans, i) =>
-              {return (<span><input value={ans} type="radio" name="country" key={i} /> {ans} </span>)}
+              {return (<span key={i}><input value={ans} type="radio" name="country" key={i} /> {ans} </span>)}
             )}
           </div>
           <button type="submit">Submit</button>
         </form>
-        {this.state.isCorrect === 'Correct!' ? <h1 style={{color:'green'}}>{this.state.isCorrect}</h1> : <h1 style={{color:'red'}}>{this.state.isCorrect}</h1>}
+        {this.state.isCorrect === 'Correct!' ? <div>
+        <button onClick={this.handleNextButtonClick}>Next</button> <h1 style={{color:'green'}}>{this.state.isCorrect}</h1>
+          </div> : this.state.isCorrect === 'Wrong!' ? <div> <button  onClick={this.handleNextButtonClick}>Next</button> <h1 style={{color:'red'}}>{this.state.isCorrect}</h1> </div> : <div></div> }
       </div>
     );
   }

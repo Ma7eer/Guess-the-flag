@@ -2,4 +2,6 @@
   text-align: center;
 }
 
-
+.noSelect {
+  pointer-events: none;
+}
