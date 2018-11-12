@@ -17,6 +17,7 @@ class App extends Component {
     this.state = {
       flag: null,
       answer: null,
+      answered: false,
       country: '',
       isCorrect: ''
     }
@@ -38,6 +39,7 @@ class App extends Component {
       });
     quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({isCorrect: ''});
+    this.setState({answered: false})
   }
 
   handleRadioChange = (event) => {
@@ -49,12 +51,13 @@ class App extends Component {
   handleRadioSubmit = (event) => {
     event.preventDefault();
     if (this.state.answer.toLowerCase() === countryName.toLowerCase()) {
-      console.log('correct!');
+      // console.log('correct!');
       this.setState({isCorrect: 'Correct!'});
     } else {
-      console.log('incorrect!');
+      // console.log('incorrect!');
       this.setState({isCorrect: 'Wrong!'});
     }
+    this.setState({answered: true})
   }
 
   handleNextButtonClick = () => {
@@ -70,7 +73,7 @@ class App extends Component {
         <form onSubmit={this.handleRadioSubmit}>
           <div onChange={this.handleRadioChange}>
           {quizChoices.map((ans, i) =>
-              {return (<span key={i}><input value={ans} type="radio" name="country" key={i} /> {ans} </span>)}
+              {return this.state.answered ? (<span key={i}><input value={ans} type="radio" name="country" key={i} disabled /> {ans} </span>) : (<span key={i}><input value={ans} type="radio" name="country" key={i} /> {ans} </span>)}
             )}
           </div>
           <button type="submit">Submit</button>
