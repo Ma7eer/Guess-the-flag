@@ -4,6 +4,7 @@ import './App.css';
 
 import Navbar from './components/Navbar';
 import Flag from './components/Flag';
+import ScoreBar from './components/ScoreBar';
 
 import getRandomCountry from './helper/getRandomCountry';
 import shuffleArray from './helper/shuffleArray';
@@ -99,9 +100,7 @@ class App extends Component {
       <React.Fragment>
         <Navbar startNewGame={this.startNewGame} />
       <div className="App">
-      <div className="score-bar-container">
-        <div className="score-bar" style={{width: this.state.score + '%'}}><span className="score">{this.state.score + '%'}</span></div>
-        </div>
+      <ScoreBar barWidth={this.state.score + '%'}/>
         <Flag startNewGame={this.startNewGame} flagUrl={this.state.flag}/>
         <form onSubmit={this.handleButtonSubmit}>
           {quizChoices.map((choice, i) => {
