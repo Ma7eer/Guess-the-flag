@@ -1,7 +1,44 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .noSelect {
   pointer-events: none;
+}
+
+.score-bar-container {
+  height: 40px;
+  width: 300px;
+  /* border: 1px solid black; */
+  padding: 0;
+  background-color: #ddd;
+  margin: 10px;
+}
+
+.score-bar {
+  height: 40px;
+  width: 0px;
+  background-color: green;
+  transition: width 0.33s linear 0.5s;
+  padding: 0;
+  /* display: flex;
+  justify-content: flex-end;
+  align-items: center; */
+  text-align: right;
+}
+
+span.score {
+  color: black;
+  margin-right: 10px;
+  position: relative;
+  top: 10px;
+  margin-left: 1px;
+}
+
+.btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

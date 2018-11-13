@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImageLoader from 'react-loading-image'
 import './Flag.css';
 
 const Flag = ({ flagUrl }) => {
   return (
-    <img src={flagUrl} alt="country flag" width="400px" className="flag"/>
+    <ImageLoader
+      src={flagUrl}
+      loading={() => <div className="loading">loading...</div>}
+      error={() => <div>Error</div>}
+      className="flag"
+    />
   )
 }
 
