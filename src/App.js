@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Flag from './components/Flag';
 import ScoreBar from './components/ScoreBar';
 import MultipleChoice from './components/MultipleChoice';
+import Results from './components/Results';
 
 import getRandomCountry from './helper/getRandomCountry';
 import shuffleArray from './helper/shuffleArray';
@@ -101,12 +102,17 @@ class App extends Component {
       <React.Fragment>
         <Navbar startNewGame={this.startNewGame} />
       <div className="App">
-      <ScoreBar barWidth={this.state.score + '%'}/>
-        <Flag startNewGame={this.startNewGame} flagUrl={this.state.flag}/>
-        <MultipleChoice quizChoices={quizChoices} handleButtonSubmit={this.handleButtonSubmit} answered={this.state.answered} handleButtonClick={this.handleButtonClick}/>
-        {this.state.isCorrect === 'Correct!' ? <div>
-        <button onClick={this.goToNextQuestion}>Next</button> <h1 style={{color:'green'}}>{this.state.isCorrect}</h1>
-          </div> : this.state.isCorrect === 'Wrong!' ? <div> <button  onClick={this.goToNextQuestion}>Next</button> <h1 style={{color:'red'}}>{this.state.isCorrect}</h1> </div> : <div> <h1 style={{color:'green'}}>{this.state.isCorrect}</h1> </div> }
+        <ScoreBar
+        barWidth={this.state.score + '%'} />
+        <Flag
+          startNewGame={this.startNewGame}
+          flagUrl={this.state.flag}/>
+        <MultipleChoice
+          quizChoices={quizChoices}
+          handleButtonSubmit={this.handleButtonSubmit} answered={this.state.answered}
+          handleButtonClick={this.handleButtonClick}/>
+        <Results
+          isCorrect={this.state.isCorrect} goToNextQuestion={this.goToNextQuestion}/>
       </div>
       </React.Fragment>
     );
