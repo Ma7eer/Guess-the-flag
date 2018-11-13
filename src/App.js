@@ -31,16 +31,20 @@ class App extends Component {
     this.startNewGame();
   }
 
+  getFlagData = (countryName) => {
+    axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
+    .then(res => {
+      this.setState({
+        flag: res.data[0].flag,
+        textInput: '',
+        country: countryName,
+      })
+    });
+  }
+
   startNewGame = () => {
     countryName = getRandomCountry();
-    axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
-      .then(res => {
-        this.setState({
-          flag: res.data[0].flag,
-          textInput: '',
-          country: countryName,
-        })
-      });
+    this.getFlagData(countryName);
     quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
         isCorrect: '',
@@ -52,14 +56,7 @@ class App extends Component {
 
   goToNextQuestion = () => {
     countryName = getRandomCountry();
-    axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
-      .then(res => {
-        this.setState({
-          flag: res.data[0].flag,
-          textInput: '',
-          country: countryName,
-        })
-      });
+    this.getFlagData(countryName);
     quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
         isCorrect: '',
@@ -112,7 +109,8 @@ class App extends Component {
           handleButtonSubmit={this.handleButtonSubmit} answered={this.state.answered}
           handleButtonClick={this.handleButtonClick}/>
         <Results
-          isCorrect={this.state.isCorrect} goToNextQuestion={this.goToNextQuestion}/>
+          isCorrect={this.state.isCorrect}
+          goToNextQuestion={this.goToNextQuestion}/>
       </div>
       </React.Fragment>
     );

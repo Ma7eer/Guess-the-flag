@@ -1,0 +1,24 @@
+.btn-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  background-color: #37474f;
+  border: none;
+  padding: 10px;
+  color: white;
+  margin-bottom: 5px;
+  width: 300px;
+  border-radius: 2px;
+}
+
+.btn:hover {
+  background-color: #455a64;
+  cursor: pointer;
+}
+
+.btn:focus {
+  background-color: #37474f;
+  cursor: pointer;
+}

@@ -1,12 +1,12 @@
 .flag {
   border: 2px solid black;
   margin-bottom: 10px;
-  width: 400px;
+  width: 300px;
   height: auto;
 }
 
 .loading {
   background-color: #ddd;
-  width: 400px;
+  width: 300px;
   height: 200px;
 }
