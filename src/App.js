@@ -3,10 +3,11 @@ import axios from 'axios';
 import './App.css';
 
 import Navbar from './components/Navbar';
+import Result from './components/Result';
 import Flag from './components/Flag';
 import ScoreBar from './components/ScoreBar';
 import MultipleChoice from './components/MultipleChoice';
-import Results from './components/Results';
+import NextButton from './components/NextButton';
 
 import getRandomCountry from './helper/getRandomCountry';
 import shuffleArray from './helper/shuffleArray';
@@ -23,6 +24,8 @@ class App extends Component {
       country: '',
       gameStatus: 'onGoing',
       score: 0,
+      totalScore: 0,
+      wrongScore: 0,
       userAnswer: null
     }
   }
@@ -34,11 +37,19 @@ class App extends Component {
   getFlagData = (countryName) => {
     axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
     .then(res => {
-      this.setState({
-        flag: res.data[0].flag,
-        textInput: '',
-        country: countryName,
-      })
+      if (countryName === 'India') { // special case related to the api
+        this.setState({
+          flag: res.data[1].flag,
+          textInput: '',
+          country: countryName,
+        })
+      } else {
+        this.setState({
+          flag: res.data[0].flag,
+          textInput: '',
+          country: countryName,
+        })
+      }
     });
   }
 
@@ -49,6 +60,8 @@ class App extends Component {
     this.setState({
         gameStatus: 'onGoing',
         score: 0,
+        totalScore: 0,
+        wrongScore: 0,
         answered: false,
         quizChoices: []
     });
@@ -67,26 +80,60 @@ class App extends Component {
   handleButtonSubmit = (event) => {
     event.preventDefault();
     if (this.state.userAnswer.toLowerCase() === countryName.toLowerCase()) {
-      if (this.state.score === 90) {
+      if (this.state.totalScore === 90) {
         this.setState(prevState => {
           return {
             gameStatus: 'Done',
+            answered: true,
             score: (prevState.score + 10)
           }
           });
+          this.setState(prevState => {
+            return {
+              totalScore: prevState.score + prevState.wrongScore
+            }
+            });
       } else {
         this.setState(prevState => {
           return {
-            gameStatus: 'Next',
-            score: (prevState.score + 10)
+            gameStatus: 'next',
+            score: (prevState.score + 10),
+            answered: true
+          }
+        });
+        this.setState(prevState => {
+          return {
+            totalScore: prevState.score + prevState.wrongScore
           }
         });
       }
     } else {
-      this.setState({gameStatus: 'Next'});
+      if (this.state.totalScore === 90) {
+        this.setState(prevState => {
+          return {
+            gameStatus: 'Done',
+            wrongScore: (prevState.wrongScore + 10)
+          }
+          });
+          this.setState(prevState => {
+            return {
+              totalScore: prevState.score + prevState.wrongScore
+            }
+            });
+          } else {
+            this.setState(prevState => {
+              return {gameStatus: 'next', wrongScore: prevState.wrongScore + 10
+            }
+          });
+            this.setState(prevState => {
+        return {
+          totalScore: prevState.score + prevState.wrongScore
+      }
+    });
     }
     this.setState({answered: true})
   }
+}
 
   handleButtonClick = (event) => {
     this.setState({userAnswer: event.target.value});
@@ -98,19 +145,20 @@ class App extends Component {
       <React.Fragment>
         <Navbar
           startNewGame={this.startNewGame} />
-      <div className="App">
+      <div className="container">
       <div className="info-container">
       <div>
       <ScoreBar
-        barWidth={this.state.score + '%'} />
+        barWidth={this.state.score + '%'} wrongScore={this.state.wrongScore + '%'} />
       </div>
       <div>
-      <Results
+      <NextButton
           gameStatus={this.state.gameStatus}
           goToNextQuestion={this.goToNextQuestion} />
       </div>
 
       </div>
+      <Result gameStatus={this.state.gameStatus} score={this.state.score} wrongScore={this.state.wrongScore}/>
 
         <div className="game-container">
         <Flag

@@ -1,0 +1,30 @@
+.btn-next {
+  top: 32%;
+  background-color: #263238;
+  border: none;
+  font-size: 15px;
+  color: white;
+  padding: 10px;
+  border-radius: 5%;
+}
+
+.btn-next:hover {
+  background-color: #455a64;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.btn-next:focus {
+  background-color: #263238;
+  /* cursor: pointer; */
+}
+
+@media only screen and (min-width: 626px) {
+  .btn-next {
+    top: 32%;
+    left: auto;
+  }
+  h1 {
+    display: block;
+  }
+}

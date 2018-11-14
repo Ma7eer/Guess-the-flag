@@ -38,7 +38,7 @@
 }
 
 .fa-check-circle {
-  color: green;
+  color: #4caf50;
   background-color: white;
   border-radius: 50%;
   transform: scale(1.2);
@@ -48,7 +48,7 @@
 }
 
 .fa-times-circle {
-  color: red;
+  color: #d32f2f;
   background-color: white;
   border-radius: 50%;
   transform: scale(1.2);

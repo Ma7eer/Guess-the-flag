@@ -1,21 +1,20 @@
 .score-bar-container {
   height: 40px;
   width: 300px;
-  /* border: 1px solid black; */
   padding: 0;
   background-color: #ddd;
   margin: 10px;
+  /* test */
+  display: flex;
+  justify-content: space-between;
 }
 
 .score-bar {
   height: 40px;
   width: 0px;
-  background-color: green;
+  background-color: #4caf50;
   transition: width 0.33s linear 0.5s;
   padding: 0;
-  /* display: flex;
-  justify-content: flex-end;
-  align-items: center; */
   text-align: right;
 }
 
@@ -23,6 +22,24 @@ span.score {
   color: black;
   margin-right: 10px;
   position: relative;
+  top: 8px;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.score-bar-left {
+  height: 40px;
+  width: 0px;
+  background-color: #d32f2f;
+  transition: width 0.33s linear 0.5s;
+  padding: 0;
+  text-align: left;
+}
+
+span.score-left {
+  color: black;
+  position: relative;
+  /* right: 27px; */
   top: 8px;
   margin-left: 5px;
   font-size: 12px;

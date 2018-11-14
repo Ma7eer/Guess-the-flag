@@ -1,4 +1,4 @@
-.App {
+.container {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -23,10 +23,5 @@
   .info-container {
     position: relative;
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* margin-right:  */
-    /* justify-content: center; */
-    /* position: relative; */
   }
 }

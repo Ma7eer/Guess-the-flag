@@ -9,20 +9,22 @@ const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, an
       className="btn-container" >
     { quizChoices.map((choice, i) => {
       return answered ?
-      <div>
+      <div key={i}>
         {choice === countryName ?
         <button
         className="btn btn-correct"
-        onClick={handleButtonClick}                  type="submit"
+        onClick={handleButtonClick}
+        type="submit"
         key={i}
         value={choice}
-        disabled ><i class="fas fa-check-circle"></i> {choice}</button> :
+        disabled ><i className="fas fa-check-circle"></i> {choice}</button> :
         <button
         className="btn btn-wrong"
-        onClick={handleButtonClick}                  type="submit"
+        onClick={handleButtonClick}
+        type="submit"
         key={i}
         value={choice}
-        disabled ><i class="fas fa-times-circle"></i> {choice}</button>}
+        disabled ><i className="fas fa-times-circle"></i> {choice}</button>}
       </div>
        :
       <button
