@@ -107,7 +107,8 @@ class App extends Component {
         <MultipleChoice
           quizChoices={quizChoices}
           handleButtonSubmit={this.handleButtonSubmit} answered={this.state.answered}
-          handleButtonClick={this.handleButtonClick}/>
+          handleButtonClick={this.handleButtonClick}
+          countryName={countryName}/>
         <Results
           isCorrect={this.state.isCorrect}
           goToNextQuestion={this.goToNextQuestion}/>

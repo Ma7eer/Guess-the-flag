@@ -7,7 +7,7 @@
   background-color: #37474f;
   border: none;
   padding: 10px;
-  color: white;
+  color: #cfd8dc;
   margin-bottom: 5px;
   width: 300px;
   border-radius: 2px;
@@ -16,9 +16,43 @@
 .btn:hover {
   background-color: #455a64;
   cursor: pointer;
+  /* transform: scale(1.1); */
+  /* transition: ease-in 0.20s; */
 }
 
 .btn:focus {
   background-color: #37474f;
   cursor: pointer;
+  transition: ease-in 0.20s;
+}
+
+.btn.btn-wrong:disabled {
+  background-color: gray;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.btn.btn-correct:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.fa-check-circle {
+  color: green;
+  background-color: white;
+  border-radius: 50%;
+  transform: scale(1.2);
+  position: relative;
+  right: 10px;
+  top: 1px;
+}
+
+.fa-times-circle {
+  color: red;
+  background-color: white;
+  border-radius: 50%;
+  transform: scale(1.2);
+  position: relative;
+  right: 10px;
+  top: 1px;
 }
