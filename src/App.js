@@ -21,7 +21,7 @@ class App extends Component {
       flag: null,
       answered: false,
       country: '',
-      isCorrect: '',
+      gameStatus: 'onGoing',
       score: 0,
       userAnswer: null
     }
@@ -47,7 +47,7 @@ class App extends Component {
     this.getFlagData(countryName);
     quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
-        isCorrect: '',
+        gameStatus: 'onGoing',
         score: 0,
         answered: false,
         quizChoices: []
@@ -59,59 +59,71 @@ class App extends Component {
     this.getFlagData(countryName);
     quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
-        isCorrect: '',
+        gameStatus: 'onGoing',
         answered: false
     });
   }
 
   handleButtonSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.userAnswer);
     if (this.state.userAnswer.toLowerCase() === countryName.toLowerCase()) {
       if (this.state.score === 90) {
         this.setState(prevState => {
           return {
-            isCorrect: 'You win!',
+            gameStatus: 'Done',
             score: (prevState.score + 10)
           }
           });
       } else {
         this.setState(prevState => {
           return {
-            isCorrect: 'Correct!',
+            gameStatus: 'Next',
             score: (prevState.score + 10)
           }
         });
       }
     } else {
-      this.setState({isCorrect: 'Wrong!'});
+      this.setState({gameStatus: 'Next'});
     }
     this.setState({answered: true})
   }
 
   handleButtonClick = (event) => {
-    this.setState({userAnswer: event.target.value})
+    this.setState({userAnswer: event.target.value});
   }
 
 
   render() {
     return (
       <React.Fragment>
-        <Navbar startNewGame={this.startNewGame} />
+        <Navbar
+          startNewGame={this.startNewGame} />
       <div className="App">
-        <ScoreBar
+      <div className="info-container">
+      <div>
+      <ScoreBar
         barWidth={this.state.score + '%'} />
+      </div>
+      <div>
+      <Results
+          gameStatus={this.state.gameStatus}
+          goToNextQuestion={this.goToNextQuestion} />
+      </div>
+
+      </div>
+
+        <div className="game-container">
         <Flag
           startNewGame={this.startNewGame}
-          flagUrl={this.state.flag}/>
+          flagUrl={this.state.flag} />
         <MultipleChoice
           quizChoices={quizChoices}
-          handleButtonSubmit={this.handleButtonSubmit} answered={this.state.answered}
+          handleButtonSubmit={this.handleButtonSubmit}
+          answered={this.state.answered}
           handleButtonClick={this.handleButtonClick}
-          countryName={countryName}/>
-        <Results
-          isCorrect={this.state.isCorrect}
-          goToNextQuestion={this.goToNextQuestion}/>
+          countryName={countryName} />
+        </div>
+
       </div>
       </React.Fragment>
     );

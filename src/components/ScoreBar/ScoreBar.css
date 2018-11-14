@@ -23,6 +23,7 @@ span.score {
   color: black;
   margin-right: 10px;
   position: relative;
-  top: 10px;
-  margin-left: 1px;
+  top: 8px;
+  margin-left: 5px;
+  font-size: 12px;
 }

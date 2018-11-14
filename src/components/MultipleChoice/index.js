@@ -10,7 +10,7 @@ const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, an
     { quizChoices.map((choice, i) => {
       return answered ?
       <div>
-        {choice == countryName ?
+        {choice === countryName ?
         <button
         className="btn btn-correct"
         onClick={handleButtonClick}                  type="submit"

@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Results.css';
 
-const Results = ({ isCorrect, goToNextQuestion }) => {
+const Results = ({ gameStatus, goToNextQuestion }) => {
   return (
-    <div>
-    {isCorrect === 'Correct!' ? <div>
-    <button onClick={goToNextQuestion}>></button>
-      </div> : isCorrect === 'Wrong!' ? <div> <button  onClick={goToNextQuestion}>></button> </div> : <div> <h1 style={{color:'green'}}>{isCorrect}</h1> </div> }
-    </div>
-
+    <React.Fragment>
+    {
+      gameStatus === 'onGoing' ?
+        null : gameStatus === 'Next' ? <button className="btn-next" onClick={goToNextQuestion}>></button> : <h1 style={{color:'green'}}>You Win!</h1>
+    }
+    </React.Fragment>
   )
 }
 

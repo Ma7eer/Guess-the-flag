@@ -8,3 +8,25 @@
 .noSelect {
   pointer-events: none;
 }
+
+.info-container {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (min-width: 626px) {
+  .game-container {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+  }
+  .info-container {
+    position: relative;
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-right:  */
+    /* justify-content: center; */
+    /* position: relative; */
+  }
+}
