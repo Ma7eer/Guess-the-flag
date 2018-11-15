@@ -2,58 +2,58 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ScoreBar.css'
 
-const ScoreBar = ({ barWidth, wrongScore }) => {
+const ScoreBar = ({ correctScore, incorrectScore }) => {
   return (
     <>
-    {barWidth === '0%' && wrongScore === '0%' ?
+    {correctScore === '0%' && incorrectScore === '0%' ?
     <div className="score-bar-container">
     <div
       className="score-bar"
-      style={{width: barWidth}} >
+      style={{width: correctScore}} >
     </div>
     <div
       className="score-bar-left"
-      style={{width: wrongScore}} >
+      style={{width: incorrectScore}} >
     </div>
-  </div> : barWidth === '0%' ? 
+  </div> : correctScore === '0%' ? 
   <div className="score-bar-container">
   <div
     className="score-bar"
-    style={{width: barWidth}} >
+    style={{width: correctScore}} >
   </div>
   <div
     className="score-bar-left"
-    style={{width: wrongScore}} >
+    style={{width: incorrectScore}} >
     <span className="score-left">
-      {wrongScore}
+      {incorrectScore}
     </span>
-  </div> </div>: wrongScore === '0%'? 
+  </div> </div>: incorrectScore === '0%'? 
   <div className="score-bar-container">
   <div
     className="score-bar"
-    style={{width: barWidth}} >
+    style={{width: correctScore}} >
     <span className="score">
-      {barWidth}
+      {correctScore}
     </span>
   </div>
   <div
     className="score-bar-left"
-    style={{width: wrongScore}} >
+    style={{width: incorrectScore}} >
   </div>
 </div> :
   <div className="score-bar-container">
   <div
     className="score-bar"
-    style={{width: barWidth}} >
+    style={{width: correctScore}} >
     <span className="score">
-      {barWidth}
+      {correctScore}
     </span>
   </div>
   <div
     className="score-bar-left"
-    style={{width: wrongScore}} >
+    style={{width: incorrectScore}} >
     <span className="score-left">
-      {wrongScore}
+      {incorrectScore}
     </span>
   </div>
 </div>

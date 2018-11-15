@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MultipleChoice.css';
 
-const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, answered, countryName }) => {
+const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, answered, correctAnswer }) => {
   return (
     <form
       onSubmit={handleButtonSubmit}
@@ -10,7 +10,7 @@ const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, an
     { quizChoices.map((choice, i) => {
       return answered ?
       <div key={i}>
-        {choice === countryName ?
+        {choice === correctAnswer ?
         <button
         className="btn btn-correct"
         onClick={handleButtonClick}

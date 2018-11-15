@@ -12,7 +12,7 @@ import NextButton from './components/NextButton';
 import getRandomCountry from './helper/getRandomCountry';
 import shuffleArray from './helper/shuffleArray';
 
-let countryName;
+let correctAnswer;
 let quizChoices = [];
 
 class App extends Component {
@@ -23,9 +23,9 @@ class App extends Component {
       answered: false,
       country: '',
       gameStatus: 'onGoing',
-      score: 0,
+      correctScore: 0,
       totalScore: 0,
-      wrongScore: 0,
+      incorrectScore: 0,
       userAnswer: null
     }
   }
@@ -35,42 +35,48 @@ class App extends Component {
   }
 
   getFlagData = (countryName) => {
-    axios.get(`https://restcountries.eu/rest/v2/name/${countryName}`)
+    axios.get(`https://restcountries.eu/rest/v2/name/${correctAnswer}`)
     .then(res => {
-      if (countryName === 'India') { // special case related to the api
+      if (correctAnswer === 'India' || correctAnswer === 'United States' || correctAnswer === 'United States') { // special case related to the api
         this.setState({
           flag: res.data[1].flag,
           textInput: '',
-          country: countryName,
+          country: correctAnswer,
+        })
+      } else if (correctAnswer === 'Korea (Republic of)') {
+        this.setState({
+          flag: res.data[0].flag,
+          textInput: '',
+          country: 'South Korea',
         })
       } else {
         this.setState({
           flag: res.data[0].flag,
           textInput: '',
-          country: countryName,
+          country: correctAnswer,
         })
       }
     });
   }
 
   startNewGame = () => {
-    countryName = getRandomCountry();
-    this.getFlagData(countryName);
-    quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
+    correctAnswer = getRandomCountry();
+    this.getFlagData(correctAnswer);
+    quizChoices = shuffleArray([correctAnswer, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
         gameStatus: 'onGoing',
-        score: 0,
+        correctScore: 0,
         totalScore: 0,
-        wrongScore: 0,
+        incorrectScore: 0,
         answered: false,
         quizChoices: []
     });
   }
 
   goToNextQuestion = () => {
-    countryName = getRandomCountry();
-    this.getFlagData(countryName);
-    quizChoices = shuffleArray([countryName, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
+    correctAnswer = getRandomCountry();
+    this.getFlagData(correctAnswer);
+    quizChoices = shuffleArray([correctAnswer, getRandomCountry(),getRandomCountry(),getRandomCountry()]);
     this.setState({
         gameStatus: 'onGoing',
         answered: false
@@ -79,31 +85,31 @@ class App extends Component {
 
   handleButtonSubmit = (event) => {
     event.preventDefault();
-    if (this.state.userAnswer.toLowerCase() === countryName.toLowerCase()) {
+    if (this.state.userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
       if (this.state.totalScore === 90) {
         this.setState(prevState => {
           return {
             gameStatus: 'Done',
             answered: true,
-            score: (prevState.score + 10)
+            correctScore: (prevState.correctScore + 10)
           }
           });
           this.setState(prevState => {
             return {
-              totalScore: prevState.score + prevState.wrongScore
+              totalScore: prevState.correctScore + prevState.incorrectScore
             }
             });
       } else {
         this.setState(prevState => {
           return {
             gameStatus: 'next',
-            score: (prevState.score + 10),
+            correctScore: (prevState.correctScore + 10),
             answered: true
           }
         });
         this.setState(prevState => {
           return {
-            totalScore: prevState.score + prevState.wrongScore
+            totalScore: prevState.correctScore + prevState.incorrectScore
           }
         });
       }
@@ -112,22 +118,23 @@ class App extends Component {
         this.setState(prevState => {
           return {
             gameStatus: 'Done',
-            wrongScore: (prevState.wrongScore + 10)
+            answered: true,
+            incorrectScore: (prevState.incorrectScore + 10)
           }
           });
           this.setState(prevState => {
             return {
-              totalScore: prevState.score + prevState.wrongScore
+              totalScore: prevState.correctScore + prevState.incorrectScore
             }
             });
           } else {
             this.setState(prevState => {
-              return {gameStatus: 'next', wrongScore: prevState.wrongScore + 10
+              return {gameStatus: 'next', incorrectScore: prevState.incorrectScore + 10
             }
           });
             this.setState(prevState => {
         return {
-          totalScore: prevState.score + prevState.wrongScore
+          totalScore: prevState.correctScore + prevState.incorrectScore
       }
     });
     }
@@ -149,7 +156,7 @@ class App extends Component {
       <div className="info-container">
       <div>
       <ScoreBar
-        barWidth={this.state.score + '%'} wrongScore={this.state.wrongScore + '%'} />
+        correctScore={this.state.correctScore + '%'} incorrectScore={this.state.incorrectScore + '%'} />
       </div>
       <div>
       <NextButton
@@ -158,7 +165,7 @@ class App extends Component {
       </div>
 
       </div>
-      <Result gameStatus={this.state.gameStatus} score={this.state.score} wrongScore={this.state.wrongScore}/>
+      <Result gameStatus={this.state.gameStatus} score={this.state.correctScore} incorrectScore={this.state.incorrectScore}/>
 
         <div className="game-container">
         <Flag
@@ -169,7 +176,7 @@ class App extends Component {
           handleButtonSubmit={this.handleButtonSubmit}
           answered={this.state.answered}
           handleButtonClick={this.handleButtonClick}
-          countryName={countryName} />
+          correctAnswer={correctAnswer} />
         </div>
 
       </div>
