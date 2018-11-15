@@ -6,3 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Technologies Used: React, Axios
 
+## Web view
+
+![](https://github.com/Ma7eer/Guess-the-flag/blob/master/gifs/webView.gif)
+
+## Mobile view
+![](https://github.com/Ma7eer/Guess-the-flag/blob/master/gifs/mobileView.gif)
