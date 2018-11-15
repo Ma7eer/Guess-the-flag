@@ -8,7 +8,7 @@ const Flag = ({ flagUrl }) => {
     <ImageLoader
       src={flagUrl}
       loading={() => <div className="loading">loading...</div>}
-      error={() => <div>Error</div>}
+      error={() => <div>Error! press "New Game"</div>}
       className="flag"
     />
   )

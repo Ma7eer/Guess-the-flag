@@ -30,7 +30,8 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  
+  componentWillMount() {
     this.startNewGame();
   }
 
