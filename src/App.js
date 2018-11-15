@@ -129,15 +129,16 @@ class App extends Component {
             });
           } else {
             this.setState(prevState => {
-              return {gameStatus: 'next', incorrectScore: prevState.incorrectScore + 10
+              return {
+                gameStatus: 'next', incorrectScore: prevState.incorrectScore + 10
             }
           });
             this.setState(prevState => {
-        return {
-          totalScore: prevState.correctScore + prevState.incorrectScore
-      }
-    });
-    }
+              return {
+                totalScore: prevState.correctScore + prevState.incorrectScore
+              }
+            });
+          }
     this.setState({answered: true})
   }
 }
@@ -154,18 +155,13 @@ class App extends Component {
           startNewGame={this.startNewGame} />
       <div className="container">
       <div className="info-container">
-      <div>
       <ScoreBar
         correctScore={this.state.correctScore + '%'} incorrectScore={this.state.incorrectScore + '%'} />
-      </div>
-      <div>
       <NextButton
           gameStatus={this.state.gameStatus}
           goToNextQuestion={this.goToNextQuestion} />
       </div>
-
-      </div>
-      <Result gameStatus={this.state.gameStatus} score={this.state.correctScore} incorrectScore={this.state.incorrectScore}/>
+      <Result gameStatus={this.state.gameStatus} correctScore={this.state.correctScore} incorrectScore={this.state.incorrectScore}/>
 
         <div className="game-container">
         <Flag

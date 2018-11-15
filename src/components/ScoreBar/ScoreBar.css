@@ -4,12 +4,11 @@
   padding: 0;
   background-color: #ddd;
   margin: 10px;
-  /* test */
   display: flex;
   justify-content: space-between;
 }
 
-.score-bar {
+.score-bar-right {
   height: 40px;
   width: 0px;
   background-color: #4caf50;
@@ -18,7 +17,7 @@
   text-align: right;
 }
 
-span.score {
+span.score-right {
   color: black;
   margin-right: 10px;
   position: relative;
