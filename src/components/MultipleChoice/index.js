@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MultipleChoice.css';
 
+
+
 const MultipleChoice = ({ handleButtonSubmit, handleButtonClick, quizChoices, answered, correctAnswer }) => {
   return (
     <form

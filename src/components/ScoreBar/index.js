@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './ScoreBar.css'
 
 const ScoreBar = ({ correctScore, incorrectScore }) => {
   return (
-    <React.Fragment>
+    <Fragment>
     {correctScore === '0%' && incorrectScore === '0%' ?
     <div className="score-bar-container"></div> :
     correctScore === '0%' ?
@@ -40,7 +40,7 @@ const ScoreBar = ({ correctScore, incorrectScore }) => {
   </div>
 }
 
-  </React.Fragment>)
+  </Fragment>)
 }
 
 ScoreBar.propTypes = {
